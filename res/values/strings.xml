@@ -4,5 +4,16 @@
     <string name="app_name">Scanner</string>
     <string name="action_settings">Settings</string>
     <string name="scan_button">Scan</string>
+    
+    <string name="textedit_dialog_title">New code tag found!</string>
+    <string name="textview_dialog_title">View code tag</string>
+    
+    <string name="dialog_firstname">Firstname</string>
+    <string name="dialog_lastname">Lastname</string>
+    <string name="dialog_address">Address</string>
+    
+    <string name="send">Send code</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
