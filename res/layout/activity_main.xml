@@ -8,30 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/scan_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/scan_button"
-        android:onClick="scanClick" />
-    
-    <TextView
-	    android:id="@+id/scan_format"
+	<Button
+	    android:id="@+id/scan_button"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:textIsSelectable="true"
 	    android:layout_centerHorizontal="true"
-	    android:layout_below="@id/scan_button" />
-    
-	<TextView
-	    android:id="@+id/scan_content"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:textIsSelectable="true"
-	    android:layout_centerHorizontal="true"
-	    android:layout_below="@id/scan_format" />
+	    android:layout_centerVertical="true"
+	    android:onClick="scanClick"
+	    android:text="@string/scan_button" />
 
 </RelativeLayout>
