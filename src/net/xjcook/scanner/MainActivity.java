@@ -1,6 +1,7 @@
 package net.xjcook.scanner;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,11 +19,16 @@ public class MainActivity extends FragmentActivity
 	public static final String EXTRA_FIRSTNAME = "net.xjcook.scanner.FIRSTNAME";
 	public static final String EXTRA_LASTNAME = "net.xjcook.scanner.LASTNAME";
 	public static final String EXTRA_ADDRESS = "net.xjcook.ADDRESS";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	}
+	
+	public void onScanClick(View button) {
+		IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+		scanIntegrator.initiateScan();
 	}
 	
 	@Override
@@ -31,35 +37,54 @@ public class MainActivity extends FragmentActivity
 				requestCode, resultCode, data);
 		
 		if (scanningResult != null) {
-			String scanContent = scanningResult.getContents();
-			Toast.makeText(this, scanContent, Toast.LENGTH_LONG).show();
+			String barCode = scanningResult.getContents();
+			new GetTask().execute(barCode);			
 		} else {
-			Toast.makeText(this, "No scan data received!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "No Barcode received!", Toast.LENGTH_LONG).show();
 		}
-	}
-
-	public void onScanClick(View button) {
-//		IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-//		scanIntegrator.initiateScan();
-		
-//		DialogFragment textEditFragment = new TextEditDialogFragment();
-//		textEditFragment.show(getSupportFragmentManager(), "text_edit");
-		
-		DialogFragment textViewFragment = new TextViewDialogFragment();
-		
-		Bundle args = new Bundle();
-		args.putString(EXTRA_FIRSTNAME, "James");
-		args.putString(EXTRA_LASTNAME, "Cook");
-		args.putString(EXTRA_ADDRESS, "Majerska 9C, 821 07 Bratislava");
-		textViewFragment.setArguments(args);
-		
-		textViewFragment.show(getSupportFragmentManager(), "text_view");
 	}
 
 	@Override
 	public void onSendClick(DialogFragment dialog) {
-		// TODO Auto-generated method stub
+		Bundle args = dialog.getArguments();
+		new PostTask().execute(args);
+	}
+	
+	public class GetTask extends AsyncTask<String, Void, Bundle> {
+
+		@Override
+		protected Bundle doInBackground(String... barCodes) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Bundle args) {
+			if (args != null) {
+				DialogFragment textViewFragment = new TextViewDialogFragment();
+				textViewFragment.setArguments(args);
+				textViewFragment.show(getSupportFragmentManager(), "text_view");
+			} else {
+				DialogFragment textEditFragment = new TextEditDialogFragment();
+				textEditFragment.show(getSupportFragmentManager(), "text_edit");
+			}
+		}
 		
+	}
+	
+	public class PostTask extends AsyncTask<Bundle, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Bundle... argBundles) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			Toast.makeText(getApplicationContext(), "Sent successfully", 
+					Toast.LENGTH_SHORT).show();
+		}
 		
 	}
 
