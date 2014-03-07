@@ -7,14 +7,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 
 public class TextEditDialogFragment extends DialogFragment {
 
 	public interface TextEditDialogListener {
-		public void onSendClick(DialogFragment dialog);
+		public void onSendClick(DialogFragment dialog, Bundle args);
 	}
 	
+	View mDialogView;
 	TextEditDialogListener mListener;
 	
 	@Override
@@ -31,23 +33,24 @@ public class TextEditDialogFragment extends DialogFragment {
 	}
 
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	public Dialog onCreateDialog(Bundle savedInstanceState) {		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
+		mDialogView = inflater.inflate(R.layout.dialog_text_edit, null);
 
 		// Inflate and set the layout for the dialog
-		builder.setView(inflater.inflate(R.layout.dialog_text_edit, null))
+		builder.setView(mDialogView)
 			.setTitle(R.string.textedit_dialog_title)
 			.setPositiveButton(R.string.send, new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// Get filled data
-					EditText firstNameEdit = (EditText) getView()
+					EditText firstNameEdit = (EditText) mDialogView
 							.findViewById(R.id.firstname_edit_text);
-					EditText lastNameEdit = (EditText) getView()
+					EditText lastNameEdit = (EditText) mDialogView
 							.findViewById(R.id.lastname_edit_text);
-					EditText addressEdit = (EditText) getView()
+					EditText addressEdit = (EditText) mDialogView
 							.findViewById(R.id.address_edit_text);
 					
 					// Save data
@@ -58,9 +61,8 @@ public class TextEditDialogFragment extends DialogFragment {
 							lastNameEdit.getText().toString());
 					args.putString(MainActivity.EXTRA_ADDRESS, 
 							addressEdit.getText().toString());
-					setArguments(args);
 					
-					mListener.onSendClick(TextEditDialogFragment.this);
+					mListener.onSendClick(TextEditDialogFragment.this, args);
 				}
 				
 			})

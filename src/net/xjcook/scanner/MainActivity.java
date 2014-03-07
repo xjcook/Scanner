@@ -45,6 +45,8 @@ public class MainActivity extends FragmentActivity
 	public static final String EXTRA_LASTNAME = "net.xjcook.scanner.LASTNAME";
 	public static final String EXTRA_ADDRESS = "net.xjcook.ADDRESS";
 	
+	private String mBarCode = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,38 +57,37 @@ public class MainActivity extends FragmentActivity
 		IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 		scanIntegrator.initiateScan();
 	}
-	
+		
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, data);
 		
 		if (scanningResult != null) {
-			String barCode = scanningResult.getContents();
-			new GetTask().execute(barCode);			
+			mBarCode = scanningResult.getContents();
+			new GetTask().execute();			
 		} else {
 			Toast.makeText(this, "No Barcode received!", Toast.LENGTH_LONG).show();
 		}
 	}
 
 	@Override
-	public void onSendClick(DialogFragment dialog) {
-		Bundle args = dialog.getArguments();
+	public void onSendClick(DialogFragment dialog, Bundle args) {
 		new PostTask().execute(args);
 	}
 	
-	private class GetTask extends AsyncTask<String, Void, Bundle> {
+	private class GetTask extends AsyncTask<Void, Void, Bundle> {
 
 		@Override
-		protected Bundle doInBackground(String... barCode) {			
+		protected Bundle doInBackground(Void... barCode) {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet request = new HttpGet();
 			Bundle args = null;
 
 			try {
 				// Encode url
-				URI url = new URI(SERVER + "/request.php?q=" + 
-						URLEncoder.encode(barCode[0], "UTF-8"));
+				URI url = new URI(SERVER + "/request.php?q=" 
+						+ URLEncoder.encode(mBarCode, "UTF-8"));
 				request.setURI(url);
 				
 				// Execute request
@@ -152,7 +153,8 @@ public class MainActivity extends FragmentActivity
 			
 			try {
 				// Encode url
-				URI url = new URI(SERVER + "/request.php");
+				URI url = new URI(SERVER + "/request.php?q="
+						+ URLEncoder.encode(mBarCode, "UTF-8"));
 				request.setURI(url);
 				
 				// Build XML request
