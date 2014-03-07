@@ -41,6 +41,7 @@ public class MainActivity extends FragmentActivity
 	
 	private static final String SERVER = "http://xj.logeec.com/scanner";
 	
+	public static final String EXTRA_BARCODE = "net.xjcook.scanner.BARCODE";
 	public static final String EXTRA_FIRSTNAME = "net.xjcook.scanner.FIRSTNAME";
 	public static final String EXTRA_LASTNAME = "net.xjcook.scanner.LASTNAME";
 	public static final String EXTRA_ADDRESS = "net.xjcook.ADDRESS";
@@ -108,6 +109,7 @@ public class MainActivity extends FragmentActivity
 					String address = doc.getElementById("address").getTextContent();
 					
 					args = new Bundle();
+					args.putString(EXTRA_BARCODE, mBarCode);
 					args.putString(EXTRA_FIRSTNAME, firstName);
 					args.putString(EXTRA_LASTNAME, lastName);
 					args.putString(EXTRA_ADDRESS, address);
@@ -136,7 +138,11 @@ public class MainActivity extends FragmentActivity
 				textViewFragment.setArguments(args);
 				textViewFragment.show(getSupportFragmentManager(), "text_view");
 			} else {
+				args = new Bundle();
+				args.putString(EXTRA_BARCODE, mBarCode);
+				
 				DialogFragment textEditFragment = new TextEditDialogFragment();
+				textEditFragment.setArguments(args);
 				textEditFragment.show(getSupportFragmentManager(), "text_edit");
 			}
 		}

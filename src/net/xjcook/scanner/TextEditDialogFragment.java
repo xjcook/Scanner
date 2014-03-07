@@ -40,7 +40,7 @@ public class TextEditDialogFragment extends DialogFragment {
 
 		// Inflate and set the layout for the dialog
 		builder.setView(mDialogView)
-			.setTitle(R.string.textedit_dialog_title)
+			.setTitle(getArguments().getString(MainActivity.EXTRA_BARCODE))
 			.setPositiveButton(R.string.send, new DialogInterface.OnClickListener() {
 				
 				@Override
