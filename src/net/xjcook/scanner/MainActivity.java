@@ -144,6 +144,10 @@ public class MainActivity extends FragmentActivity
 				DialogFragment textEditFragment = new TextEditDialogFragment();
 				textEditFragment.setArguments(args);
 				textEditFragment.show(getSupportFragmentManager(), "text_edit");
+				
+				Toast.makeText(getApplicationContext(), 
+						"Code doesn't exist in DB, please fill details.", 
+						Toast.LENGTH_LONG).show();;
 			}
 		}
 		
