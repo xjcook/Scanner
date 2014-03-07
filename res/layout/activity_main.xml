@@ -14,8 +14,12 @@
 	    android:layout_height="wrap_content"
 	    android:layout_centerHorizontal="true"
 	    android:layout_centerVertical="true"
-	    android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
 	    android:onClick="onScanClick"
-	    android:text="@string/scan_button" />
+	    android:text="@string/scan_button"
+	    android:textSize="20sp" />
 
 </RelativeLayout>

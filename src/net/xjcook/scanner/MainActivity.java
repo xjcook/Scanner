@@ -159,7 +159,8 @@ public class MainActivity extends FragmentActivity
 				
 				// Build XML request
 				StringEntity sEntity = new StringEntity(
-					"<scan>"
+					"<!DOCTYPE scanner SYSTEM '" + SERVER + "/scanner.dtd'>"
+					+ "<scanner>"
 						+ "<detail id='firstname'>" 
 							+ args[0].getString(EXTRA_FIRSTNAME) 
 						+ "</detail>"
@@ -169,8 +170,8 @@ public class MainActivity extends FragmentActivity
 						+ "<detail id='address'>"
 							+ args[0].getString(EXTRA_ADDRESS)
 						+ "</detail>"
-					+ "</scan>", "UTF-8");
-				sEntity.setContentType("text/xml");
+					+ "</scanner>", "UTF-8");
+				sEntity.setContentType("application/xml");
 				request.setEntity(sEntity);
 						
 				// Execute request
@@ -201,7 +202,7 @@ public class MainActivity extends FragmentActivity
 
 		@Override
 		protected void onCancelled(Void result) {
-			Toast.makeText(getApplicationContext(), "Sent unsuccessfully", 
+			Toast.makeText(getApplicationContext(), "Sent unsuccessfully!", 
 					Toast.LENGTH_LONG).show();
 		}
 		
