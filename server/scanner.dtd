@@ -1,0 +1,3 @@
+<!ELEMENT scanner (detail+)>
+<!ELEMENT detail (#PCDATA)>
+<!ATTLIST detail id ID #REQUIRED>
