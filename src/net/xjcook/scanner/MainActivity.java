@@ -81,6 +81,10 @@ public class MainActivity extends FragmentActivity
 
 		@Override
 		protected Bundle doInBackground(Void... barCode) {
+			if (mBarCode == null) {
+				cancel(true);
+			}
+			
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet request = new HttpGet();
 			Bundle args = null;
@@ -157,7 +161,6 @@ public class MainActivity extends FragmentActivity
 
 		@Override
 		protected Void doInBackground(Bundle... args) {
-
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost request = new HttpPost();
 			
